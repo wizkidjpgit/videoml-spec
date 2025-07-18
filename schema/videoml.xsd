@@ -1,1 +1,157 @@
-<!-- XSDの内容をここに挿入 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="videoml">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="head"/>
+        <xs:element ref="video"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="head">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="meta" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:attribute name="name" type="xs:string" use="required"/>
+            <xs:attribute name="content" type="xs:string" use="required"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="video">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="clip"/>
+          <xs:element ref="text"/>
+          <xs:element ref="image"/>
+          <xs:element ref="bgm"/>
+          <xs:element ref="layer"/>
+          <xs:element ref="mask"/>
+          <xs:element ref="svg"/>
+          <xs:element ref="speech"/>
+          <xs:element ref="score"/>
+          <xs:element ref="script"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="clip">
+    <xs:complexType>
+      <xs:attribute name="src" type="xs:string" use="required"/>
+      <xs:attribute name="start" type="xs:string"/>
+      <xs:attribute name="end" type="xs:string"/>
+      <xs:attribute name="in" type="xs:string"/>
+      <xs:attribute name="transition" type="xs:string"/>
+      <xs:attribute name="mask" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="text">
+    <xs:complexType>
+      <xs:attribute name="id" type="xs:string"/>
+      <xs:attribute name="content" type="xs:string" use="required"/>
+      <xs:attribute name="in" type="xs:string"/>
+      <xs:attribute name="out" type="xs:string"/>
+      <xs:attribute name="class" type="xs:string"/>
+      <xs:attribute name="speak" type="xs:boolean"/>
+      <xs:attribute name="voice" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="image">
+    <xs:complexType>
+      <xs:attribute name="src" type="xs:string" use="required"/>
+      <xs:attribute name="in" type="xs:string"/>
+      <xs:attribute name="out" type="xs:string"/>
+      <xs:attribute name="position" type="xs:string"/>
+      <xs:attribute name="width" type="xs:string"/>
+      <xs:attribute name="height" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="bgm">
+    <xs:complexType>
+      <xs:attribute name="src" type="xs:string" use="required"/>
+      <xs:attribute name="volume" type="xs:decimal"/>
+      <xs:attribute name="fadeIn" type="xs:string"/>
+      <xs:attribute name="fadeOut" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="layer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="clip"/>
+          <xs:element ref="text"/>
+          <xs:element ref="image"/>
+          <xs:element ref="speech"/>
+          <xs:element ref="svg"/>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:string"/>
+      <xs:attribute name="zIndex" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="mask">
+    <xs:complexType>
+      <xs:attribute name="id" type="xs:string" use="required"/>
+      <xs:attribute name="type" type="xs:string"/>
+      <xs:attribute name="src" type="xs:string" use="required"/>
+      <xs:attribute name="animated" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="svg">
+    <xs:complexType mixed="true">
+      <xs:attribute name="in" type="xs:string"/>
+      <xs:attribute name="out" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="speech">
+    <xs:complexType>
+      <xs:attribute name="id" type="xs:string"/>
+      <xs:attribute name="content" type="xs:string"/>
+      <xs:attribute name="src" type="xs:string"/>
+      <xs:attribute name="in" type="xs:string"/>
+      <xs:attribute name="voice" type="xs:string"/>
+      <xs:attribute name="rate" type="xs:decimal"/>
+      <xs:attribute name="pitch" type="xs:decimal"/>
+      <xs:attribute name="volume" type="xs:decimal"/>
+      <xs:attribute name="emotion" type="xs:string"/>
+      <xs:attribute name="engine" type="xs:string"/>
+      <xs:attribute name="syncTarget" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="score">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="note" minOccurs="1" maxOccurs="unbounded">
+          <xs:complexType mixed="true">
+            <xs:attribute name="pitch" type="xs:string"/>
+            <xs:attribute name="duration" type="xs:string"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="voice" type="xs:string" use="required"/>
+      <xs:attribute name="in" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="script">
+    <xs:complexType mixed="true">
+      <xs:attribute name="type" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

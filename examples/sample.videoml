@@ -1,4 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <videoml>
-  <head></head>
-  <video></video>
+  <head>
+    <meta name="duration" content="15s" />
+    <meta name="resolution" content="1280x720" />
+    <meta name="fps" content="30" />
+    <meta name="outputFormat" content="mp4" />
+    <meta name="encoding" content="h264" />
+  </head>
+
+  <video>
+    <clip src="intro.mp4" start="0s" end="5s" transition="fade" />
+
+    <text id="helloText" content="ようこそ VideoML へ！" in="1s" out="6s" class="title" speak="true" voice="ja-JP-Ichiro" />
+
+    <image src="logo.png" in="2s" out="10s" position="top-right" width="200px" height="100px" />
+
+    <bgm src="bgm.mp3" volume="0.8" fadeIn="1s" fadeOut="2s" />
+
+    <layer id="overlay" zIndex="2">
+      <svg in="3s" out="8s">
+        <![CDATA[
+          <circle cx="100" cy="100" r="50" fill="red">
+            <animate attributeName="r" from="50" to="100" dur="2s" repeatCount="indefinite" />
+          </circle>
+        ]]>
+      </svg>
+    </layer>
+
+    <speech id="narration" content="この映像は VideoML によって自動生成されました。" voice="ja-JP-Nanami" in="5s" rate="1.0" pitch="1.0" volume="1.0" emotion="cheerful" engine="neural" />
+
+    <score voice="ja-JP-Haruka" in="7s">
+      <note pitch="C4" duration="1s" />
+      <note pitch="E4" duration="1s" />
+      <note pitch="G4" duration="1s" />
+    </score>
+
+    <clip src="outro.mp4" start="0s" end="5s" in="10s" transition="wipe" />
+  </video>
 </videoml>
