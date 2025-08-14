@@ -49,10 +49,10 @@ VideoMLは、動画をマークアップ風に構造的に記述し、AIやプ�
 * `<clip>`：動画ファイルのカット挿入
 * `<text>`：テロップ、字幕、発話テキスト
 * `<image>`：静止画像の表示
+* `<svg>`：装飾やアニメーション用SVG
 * `<bgm>`：BGM挿入
 * `<layer>`：レイヤーの構造定義
 * `<mask>`：マスク処理
-* `<svg>`：装飾やアニメーション用SVG
 * `<speech>`：TTS（テキスト音声合成）
 * `<score>`：楽譜（歌唱表現）
 * `<script>`：JSによる動的制御
@@ -93,30 +93,12 @@ VideoMLは、動画をマークアップ風に構造的に記述し、AIやプ�
 | ------ | -------------------------------------- |
 | `type` | トラックの種類（video / audio / text / svg など） |
 | `id`   | 識別用ID（任意）                              |
-| `position` | 表示位置（例: `top-left`, `center`, `bottom-right`） |
-| `x`, `y` | カスタム位置指定（ピクセル単位、`vw`, `vh`対応、例: `x="10vw" y="20vh"`） |
-
----
-
-### `<voiceProfile>`（音声プロファイル定義）
-
-TTSや歌唱合成の声のパラメータセットを定義。
-これにより`speech`や`score`で使い回しが可能。
-
-```xml
-<voiceProfile id="narrator1" engine="gTTS" voice="ja-JP-Wavenet-B" rate="1.0" pitch="1.1" emotion="calm" />
-```
-
-| 属性        | 説明                                      |
-| --------- | --------------------------------------- |
-| `id`      | 識別用ID（`voice="narrator1"` のように参照）       |
-| `engine`  | 使用する音声エンジン（例: gTTS, Amazon Polly, etc.） |
-| `voice`   | 音声IDやラベル（例: ja-JP-Wavenet-B）            |
-| `rate`    | 話速（1.0が通常）                              |
-| `pitch`   | 音程（1.0が通常）                              |
-| `emotion` | 話し方の感情（calm, cheerfulなど）                |
-
-`speech`や`score`では `voice="narrator1"` のように参照できます。
+| `size`  | フォントサイズ（vwやvh単位を推奨）      |
+| `font`  | フォントの種類      |
+| `color`  | カラー      |
+| `class`  | CSSクラス名      |
+| `style`  | インラインCSSスタイル      |
+| `align`  | 左寄せ、右寄せ、中央寄せ      |
 
 ---
 
@@ -129,6 +111,7 @@ TTSや歌唱合成の声のパラメータセットを定義。
 | `in`           | 開始時間      |
 | `transition`   | トランジション名  |
 | `mask`         | 適用するマスクID |
+| `volume`       | 音量（例: "1.0"） |
 
 ##### `start` / `end` の時間指定方法
 
@@ -145,11 +128,39 @@ VideoMLでは時間指定を以下のように多様な単位で行うことが�
 
 #### `<text>`
 
-| 属性        | 説明                  |
-| --------- | ------------------- |
-| `content` | 表示する文字列             |
-| `speak`   | TTSを使うか（true/false） |
-| `voice`   | 使用音声の種類             |
+| 属性         | 説明                  |
+| ----------- | ------------------- |
+| `content`   | 表示する文字列             |
+| `in`        | 開始時間      |
+| `duration`  | 再生時間      |
+| `size`  | フォントサイズ（vwやvh単位を推奨）      |
+| `font`  | フォントの種類      |
+| `color`  | カラー      |
+| `bgcolor`  | 背景カラー      |
+| `top`,`bottom`,`left`,`right`  | 表示位置（vwやvh単位を推奨）      |
+| `width`,`height`  | 表示サイズ（vwやvh単位を推奨）      |
+| `align`  | 左寄せ、右寄せ、中央寄せ      |
+| `class`  | CSSクラス名      |
+| `style`  | インラインCSSスタイル      |
+
+#### `<image>`
+
+| 属性         | 説明                  |
+| ----------- | ------------------- |
+| `src`   | 画像URL             |
+| `top`,`bottom`,`left`,`right`  | 表示位置（vwやvh単位を推奨）      |
+| `width`,`height`  | 表示サイズ（vwやvh単位を推奨）      |
+| `class`  | CSSクラス名      |
+| `style`  | インラインCSSスタイル      |
+
+#### `<svg>`
+
+| 属性         | 説明                  |
+| ----------- | ------------------- |
+| `top`,`bottom`,`left`,`right`  | 表示位置（vwやvh単位を推奨）      |
+| `width`,`height`  | 表示サイズ（vwやvh単位を推奨）      |
+| `class`  | CSSクラス名      |
+| `style`  | インラインCSSスタイル      |
 
 #### `<speech>`
 
@@ -159,8 +170,8 @@ TTS専用。声の種類や感情・速度・同期ターゲットなど細か�
 | ------------ | ---------------------------------- |
 | `content`    | 読み上げる文章（テキスト）                      |
 | `src`        | 音声ファイルを直接指定する場合（省略可）               |
-| `voice`      | 話者の種類（例: "ja\_female\_01"）         |
-| `rate`       | 音声の速度（例: "1.0" = 通常速度）             |
+| `voice`      | 話者の種類（例: "Mizuki","Takumi","Kazuha","Tomoko"）         |
+| `rate`       | 1秒間の平均発話数（例: "6.0"）             |
 | `pitch`      | ピッチ（高さ）調整（例: "0.8"）                |
 | `volume`     | 音量（例: "1.0"）                       |
 | `emotion`    | 感情表現（例: "joy", "anger"）            |
@@ -215,6 +226,29 @@ VideoMLでは `<clip transition="fade" transitionDuration="1.0s" />` のよう�
 CSSやJSアニメーションによっても拡張可能です。
 
 ---
+
+### `<voiceProfile>`（音声プロファイル定義）
+
+TTSや歌唱合成の声のパラメータセットを定義。
+これにより`speech`や`score`で使い回しが可能。
+
+```xml
+<voiceProfile id="narrator1" engine="gTTS" voice="ja-JP-Wavenet-B" rate="1.0" pitch="1.1" emotion="calm" />
+```
+
+| 属性        | 説明                                      |
+| --------- | --------------------------------------- |
+| `id`      | 識別用ID（`voice="narrator1"` のように参照）       |
+| `engine`  | 使用する音声エンジン（例: gTTS, Amazon Polly, etc.） |
+| `voice`   | 音声IDやラベル（例: ja-JP-Wavenet-B）            |
+| `rate`    | 話速（1.0が通常）                              |
+| `pitch`   | 音程（1.0が通常）                              |
+| `emotion` | 話し方の感情（calm, cheerfulなど）                |
+
+`speech`や`score`では `voice="narrator1"` のように参照できます。
+
+---
+
 
 ## 🎨 スタイル定義 (VideoCSS)
 
